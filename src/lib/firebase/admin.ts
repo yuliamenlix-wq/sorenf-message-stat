@@ -1,20 +1,23 @@
 import admin from "firebase-admin";
-import { readFileSync } from "fs";
-import path from "path";
 
-// Ruta al JSON del service account
-const serviceAccountPath = path.resolve("./src/lib/firebase/firebase_key.json");
+import 'dotenv/config';
 
-// Inicializa Firebase Admin si aún no se ha hecho
 if (!admin.apps.length) {
-  const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, "utf-8"));
+  if (!process.env.FIREBASE_PROJECT_ID ||
+      !process.env.FIREBASE_CLIENT_EMAIL ||
+      !process.env.FIREBASE_PRIVATE_KEY) {
+    throw new Error("Missing Firebase env variables");
+  }
+
+  const firebaseConfig = {
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  };
 
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    // databaseURL opcional, solo necesario si usas Realtime Database
-    // databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`,
+    credential: admin.credential.cert(firebaseConfig),
   });
 }
 
-// Exporta Firestore Admin
 export const adminDb = admin.firestore();

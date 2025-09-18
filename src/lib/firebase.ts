@@ -1,19 +1,19 @@
-import { initializeApp, cert } from "firebase-admin/app";
-import type { ServiceAccount } from "firebase-admin";
-import { getFirestore } from "firebase-admin/firestore";
+import admin from "firebase-admin";
+import { readFileSync } from "fs";
+import path from "path";
 
-// Carga la clave desde env
-const firebaseConfig: ServiceAccount = JSON.parse(
-  process.env.FIREBASE_KEY_JSON || "{}"
-);
+// Ruta al JSON
+const serviceAccountPath = path.resolve("./src/lib/firebase_key.json");
 
-const app = initializeApp({
-  credential: cert(firebaseConfig),
-});
+// Solo inicializa si no está ya
+if (!admin.apps.length) {
+  const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, "utf-8"));
 
-export const db = getFirestore(app);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`,
+  });
+}
 
-export const users_col = db.collection("users");
-export const streams_col = db.collection("streams");
-export const messages_col = db.collection("messages");
-export const reward_requests_col = db.collection("reward_requests");
+export const adminDb = admin.firestore();
+export const adminAuth = admin.auth();

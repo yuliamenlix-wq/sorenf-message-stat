@@ -1,11 +1,14 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import TopUsersTable from '../components/TopUsersTable'
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Top de usuarios</title>
+  </head>
+  <body class="p-8 bg-[#f5f7f8] min-h-screen">
+    <h1 class="text-2xl font-bold mb-4">Top de usuarios por mensajes</h1>
+    <TopUsersTable client:load />
+  </body>
+</html>

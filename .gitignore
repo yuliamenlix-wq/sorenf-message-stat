@@ -43,3 +43,6 @@ build/
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+# Ignorar credenciales de Firebase
+/lib/firebase/admin/*.json

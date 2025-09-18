@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# MacOS files
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Astro build
+/dist
+/.astro
+/.vercel
+
+# Firebase service account key
+firebase_key_json.json
+
+# VS Code
+.vscode/
+
+# Tailwind output (si generas CSS separado)
+public/tailwind.css
+
+# Angular
+.angular/
+*.angular.json
+
+# React / Vite / Vue
+dist/
+build/
+*.local
+*.cache
+
+# Optional: lock files (si no quieres subirlos)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
